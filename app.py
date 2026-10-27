@@ -15,7 +15,7 @@ st.set_page_config(page_title="Educação em MS — ODS 4", page_icon="📊", la
 st.markdown(
     """
     <style>
-      .block-container { padding-top: 2rem; }
+      .block-container { padding-top: 4.5rem; }
       .cabecalho { display: flex; gap: 1rem; align-items: center; margin-bottom: .25rem; }
       .ods { background: #C5192D; color: #fff; border-radius: 8px; padding: .55rem .8rem; text-align: center;
              font-weight: 700; line-height: 1.05; min-width: 74px; }
