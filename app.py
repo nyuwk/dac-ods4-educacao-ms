@@ -94,7 +94,7 @@ with st.sidebar:
     lista = "".join(f"<div class='membro'>{avatar}<span>{n}</span></div>" for n in integrantes)
     st.markdown(
         "<div class='equipe'><div class='equipe-titulo'>Desenvolvido pelo grupo</div>"
-        f"{lista}<div class='equipe-curso'>UCDB · CC e ADS · 4º semestre</div></div>",
+        f"{lista}<div class='equipe-curso'>UCDB · TADS · 4º semestre</div></div>",
         unsafe_allow_html=True,
     )
     st.divider()
