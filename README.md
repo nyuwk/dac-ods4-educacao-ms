@@ -5,7 +5,7 @@ Mato Grosso do Sul (2018–2026), armazena a série histórica em um banco SQL e
 dashboard com filtros por município e ano para responder: **a educação no estado está evoluindo?**
 
 Desafio de Articulação de Competências (DAC) — ODS 4 (Educação de Qualidade) — UCDB, 4º semestre
-de Ciência da Computação e Tecnologia em Análise e Desenvolvimento de Sistemas.
+de Tecnologia em Análise e Desenvolvimento de Sistemas (TADS).
 Professor referência: Renato Gil Arruda Vieira.
 
 **Integrantes:** Breno Salazar, Giovana Tiemi, Manuela de Araujo, Maria Eduarda.
