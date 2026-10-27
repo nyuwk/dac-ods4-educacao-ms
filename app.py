@@ -22,7 +22,8 @@ anos = repo.anos()
 
 with st.sidebar:
     st.header("Filtros")
-    sel_mun = st.multiselect("Municípios (vazio = estado todo)", repo.municipios())
+    sel_mun = st.multiselect("Municípios (vazio = estado todo)", repo.municipios(),
+                             placeholder="Selecione municípios")
     ano_ini, ano_fim = st.select_slider("Período", options=anos, value=(anos[0], anos[-1]))
 
 df = repo.indicadores(sel_mun, ano_ini, ano_fim)
@@ -68,7 +69,9 @@ if not completos.empty:
     st.subheader("Taxas de rendimento por ano (anos completos)")
     longo = completos.melt(id_vars="ano", value_vars=["Aprovação", "Reprovação", "Abandono", "Cancelamento"],
                            var_name="Indicador", value_name="Taxa (%)")
-    fig = px.line(longo, x="ano", y="Taxa (%)", color="Indicador", markers=True, labels={"ano": "Ano"})
+    cores = {"Aprovação": "#2e86de", "Reprovação": "#f39c12", "Abandono": "#e74c3c", "Cancelamento": "#8e44ad"}
+    fig = px.line(longo, x="ano", y="Taxa (%)", color="Indicador", markers=True, labels={"ano": "Ano"},
+                  color_discrete_map=cores)
     fig.update_xaxes(dtick=1)
     fig.update_layout(separators=",.")
     st.plotly_chart(fig, width="stretch")
@@ -99,8 +102,23 @@ if anos_completos and len(sel_mun) != 1:
 
 if len(sel_mun) == 1:
     st.subheader(f"Escolas de {sel_mun[0]}")
-    st.dataframe(repo.escolas(sel_mun[0], ano_ini, ano_fim), width="stretch")
+    escolas = repo.escolas(sel_mun[0], ano_ini, ano_fim).rename(columns={
+        "escola": "Escola", "ano": "Ano", "matriculas": "Matrículas", "aprovados": "Aprovados",
+        "reprovados": "Reprovados", "abandono": "Abandono", "cancelados": "Cancelados",
+        "transferidos": "Transferidos", "cursando": "Cursando"})
+    st.dataframe(escolas, width="stretch", hide_index=True,
+                 column_config={"Ano": st.column_config.NumberColumn(format="%d")})
 
 st.subheader("Dados filtrados")
-st.dataframe(df, width="stretch")
+tabela = df.drop(columns=["cursando"]).rename(columns={
+    "municipio": "Município", "ano": "Ano", "escolas": "Escolas", "matriculas": "Matrículas",
+    "aprovados": "Aprovados", "reprovados": "Reprovados", "abandono": "Abandono", "cancelados": "Cancelados",
+    "transferidos": "Transferidos", "ano_completo": "Ano completo", "taxa_aprovacao": "Aprovação (%)",
+    "taxa_reprovacao": "Reprovação (%)", "taxa_abandono": "Abandono (%)", "taxa_cancelamento": "Cancelamento (%)"})
+tabela["Ano completo"] = tabela["Ano completo"].map({1: "Sim", 0: "Não"})
+taxas = ["Aprovação (%)", "Reprovação (%)", "Abandono (%)", "Cancelamento (%)"]
+st.dataframe(tabela, width="stretch", hide_index=True,
+             column_config={"Ano": st.column_config.NumberColumn(format="%d"),
+                            **{c: st.column_config.NumberColumn(format="%.1f") for c in taxas}})
+st.caption("Taxas vazias = ano incompleto (2024 e 2026).")
 st.download_button("Baixar CSV", df.to_csv(index=False).encode("utf-8-sig"), "indicadores_ms.csv")
