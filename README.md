@@ -82,6 +82,7 @@ src/repository.py    RepositorioEscolar: consultas usadas pela interface
 scripts/             download dos dados e carga do banco
 app.py               dashboard Streamlit
 docs/img/            prints do sistema
+.streamlit/          tema visual do dashboard
 ```
 
 Fluxo: **CSV → CarregadorCSV → objetos em memória → SQLite → RepositorioEscolar → dashboard**.
@@ -100,10 +101,8 @@ Carga verificada: 3.703 registros, 79 municípios e 598 escolas distintas.
 
 ## Prints
 
-| Estado (2018–2026) | Campo Grande |
+| Visão geral (estado, 2018–2026) | Comparação entre municípios |
 |---|---|
-| ![](docs/img/dashboard_estado.png) | ![](docs/img/dashboard_campo_grande.png) |
-
-![Taxas por ano](docs/img/serie_historica.png)
-![Matrículas por ano](docs/img/matriculas_por_ano.png)
-![Municípios com menor aprovação em 2023](docs/img/ranking_municipios.png)
+| ![](docs/img/dashboard_estado.png) | ![](docs/img/dashboard_municipios.png) |
+| **Filtro por município (Campo Grande)** | **Dados filtrados** |
+| ![](docs/img/dashboard_campo_grande.png) | ![](docs/img/dashboard_dados.png) |
