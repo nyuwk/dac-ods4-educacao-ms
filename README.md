@@ -64,9 +64,11 @@ python -m venv .venv
 # source .venv/bin/activate     # Linux / macOS
 pip install -r requirements.txt
 
-python -m scripts.carregar_banco  # cria educacao_ms.db a partir dos CSVs
 streamlit run app.py              # abre o dashboard em http://localhost:8501
 ```
+
+Na primeira execução o próprio app cria o banco `educacao_ms.db` a partir dos CSVs. Para recriá-lo
+manualmente (e ver o resumo da carga): `python -m scripts.carregar_banco`.
 
 Os CSVs já estão em `data/raw/`. Para baixá-los de novo do portal: `python scripts/baixar_dados.py`.
 

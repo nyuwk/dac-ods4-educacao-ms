@@ -20,7 +20,7 @@ def inteiro(valor) -> int:
 
 
 class CarregadorCSV:
-    def __init__(self, pasta: str = "data/raw"):
+    def __init__(self, pasta: str | Path = "data/raw"):
         self.pasta = Path(pasta)
         self.municipios: dict[str, Municipio] = {}
         self.linhas_lidas = 0

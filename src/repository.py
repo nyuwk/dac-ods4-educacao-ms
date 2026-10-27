@@ -1,11 +1,12 @@
 """Consultas usadas pela interface."""
 import pandas as pd
 
-from src.database import conectar
+from src.database import conectar, garantir_banco
 
 
 class RepositorioEscolar:
     def __init__(self):
+        garantir_banco()
         self.con = conectar()
 
     def municipios(self) -> list[str]:

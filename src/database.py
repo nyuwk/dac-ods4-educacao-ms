@@ -2,7 +2,8 @@
 import sqlite3
 from pathlib import Path
 
-DB_PATH = Path("educacao_ms.db")
+RAIZ = Path(__file__).resolve().parent.parent  # pasta do projeto, de onde quer que o código rode
+DB_PATH = RAIZ / "educacao_ms.db"
 
 
 def conectar() -> sqlite3.Connection:
@@ -12,7 +13,7 @@ def conectar() -> sqlite3.Connection:
 
 
 def criar_schema(con: sqlite3.Connection) -> None:
-    con.executescript(Path("sql/schema.sql").read_text(encoding="utf-8"))
+    con.executescript((RAIZ / "sql" / "schema.sql").read_text(encoding="utf-8"))
 
 
 def salvar(con: sqlite3.Connection, municipios: dict) -> None:
@@ -32,3 +33,27 @@ def salvar(con: sqlite3.Connection, municipios: dict) -> None:
                   r.reprovados, r.cursando, r.outras_situacoes) for r in esc.serie_historica()],
             )
     con.commit()
+
+
+def banco_pronto() -> bool:
+    """True se o banco existe e já tem a série histórica carregada."""
+    if not DB_PATH.exists():
+        return False
+    try:
+        with sqlite3.connect(DB_PATH) as con:
+            return con.execute("SELECT COUNT(*) FROM registro_anual").fetchone()[0] > 0
+    except sqlite3.Error:
+        return False
+
+
+def garantir_banco() -> None:
+    """Cria e carrega o banco a partir dos CSVs se ele ainda não existir (ex.: na hospedagem online)."""
+    if banco_pronto():
+        return
+    from src.loader import CarregadorCSV  # import local evita dependência circular
+
+    municipios = CarregadorCSV(RAIZ / "data" / "raw").carregar()
+    con = conectar()
+    criar_schema(con)
+    salvar(con, municipios)
+    con.close()
