@@ -25,6 +25,11 @@ st.markdown(
       .cabecalho p { margin: .15rem 0 0; color: #5B6472; font-size: .95rem; }
       div[data-testid="stMetric"] { background: #F7F9FC; }
       .nota { color: #5B6472; font-size: .85rem; }
+      .equipe-titulo { font-weight: 600; font-size: .9rem; color: #12233B; margin-bottom: .55rem; }
+      .membro { display: flex; align-items: center; gap: .6rem; margin-bottom: .5rem; }
+      .membro span { font-size: .92rem; color: #1D2430; }
+      .avatar { width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0; box-shadow: 0 0 0 2px #FFFFFF, 0 0 0 3px #D9DEE6; }
+      .equipe-curso { color: #5B6472; font-size: .78rem; margin-top: .35rem; }
     </style>
     <div class="cabecalho">
       <div class="ods"><span>ODS</span><b>4</b><span>EDUCAÇÃO</span></div>
@@ -80,6 +85,18 @@ with st.sidebar:
     st.header("Filtros")
     sel_mun = st.multiselect("Municípios", repo.municipios(), placeholder="Estado todo")
     ano_ini, ano_fim = st.select_slider("Período", options=anos, value=(anos[0], anos[-1]))
+    st.divider()
+    avatar = ("<svg class='avatar' viewBox='0 0 40 40' xmlns='http://www.w3.org/2000/svg'>"
+              "<rect width='40' height='40' fill='#CDD3DB'/>"
+              "<circle cx='20' cy='15.5' r='7.5' fill='#FFFFFF'/>"
+              "<ellipse cx='20' cy='38' rx='14' ry='11' fill='#FFFFFF'/></svg>")
+    integrantes = ["Breno Salazar", "Maria Eduarda", "Manuela de Araujo", "Giovana Tiemi"]
+    lista = "".join(f"<div class='membro'>{avatar}<span>{n}</span></div>" for n in integrantes)
+    st.markdown(
+        "<div class='equipe'><div class='equipe-titulo'>Desenvolvido pelo grupo</div>"
+        f"{lista}<div class='equipe-curso'>UCDB · CC e ADS · 4º semestre</div></div>",
+        unsafe_allow_html=True,
+    )
     st.divider()
     st.markdown(
         "<div class='nota'><b>Sobre os dados</b><br>Fonte: Portal de Dados Abertos de MS (SED/MS, CC-BY).<br>"
