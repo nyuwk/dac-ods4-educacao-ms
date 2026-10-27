@@ -10,6 +10,11 @@ Professor referência: Renato Gil Arruda Vieira.
 
 **Integrantes:** Breno Salazar, Giovana Tiemi, Manuela de Araujo, Maria Eduarda.
 
+### 🔗 Acesse o dashboard online: **https://educacao-ms-ods4.streamlit.app**
+
+Não precisa instalar nada. Se aparecer a mensagem de que o app está dormindo (*"This app has gone to sleep"*),
+clique no botão para acordá-lo e aguarde cerca de 1 minuto.
+
 ![Dashboard](docs/img/dashboard_estado.png)
 
 ## Principais resultados
